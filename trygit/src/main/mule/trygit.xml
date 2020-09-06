@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f9e53d1a-f815-40a6-931d-6f0b3c35323c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="exerciseFlow" doc:id="06fbe6d2-4f75-48ca-a0d6-00c6af76aab1" >
+		<http:listener doc:name="Listener" doc:id="9998d094-1981-4191-bab4-d1256d2d890c" config-ref="HTTP_Listener_config" path="/Q5"/>
+		<ee:transform doc:name="Transform Message" doc:id="08633354-bf43-474f-9ee7-a5606a0ceadd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var question = 
+{
+"user": [
+{
+"id": "693cacff-147d-4b84-add8-dad773730508",
+"firstname": "piter",
+"middlename": "gg",
+"lastname": "gg",
+"city": "jj",
+"state": "New York",
+"address": "gg",
+"email": "ggh@hh.nn"
+},
+{
+"id": "53634496-86ee-420b-9d36-64969e417833",
+"firstname": "tomas",
+"middlename": "dsfsd",
+"lastname": "dsfsdf",
+"city": "AA",
+"state": "California",
+"address": "sdsd",
+"email": "dsdsf@gmail.com"
+}
+]
+}
+
+---
+payload.user map  {
+    ($$):$
+    }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
